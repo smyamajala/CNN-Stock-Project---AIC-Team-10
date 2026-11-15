@@ -1,4 +1,5 @@
-
+from sample_candlesticks import DOWN
+@DOWN
 #def(
 #transform.sensor
 

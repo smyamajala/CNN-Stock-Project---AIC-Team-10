@@ -9,14 +9,14 @@ class DataConfig:
 #def(
 #transform.sensor
 
-#import os # standard library
-#from datetime import datetime # from this section import this feature
+import os # standard library
+from datetime import datetime # from this section import this feature
 
-#import torch
-#from torchvision import datasets, transforms
-#from torch.utils.data import DataLoader, Subset
+import torch
+from torchvision import datasets, transforms
+from torch.utils.data import DataLoader, Subset
 
-#DATA_DIR = "sample_candlesticks" # directory of generated images 
+DATA_DIR = "sample_candlesticks" # directory of generated images 
 
 #1 Configuration: Sets image size, batch size, and split percentages
 

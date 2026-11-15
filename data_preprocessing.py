@@ -6,6 +6,12 @@ class DataConfig:
   train_split = float = 0.7
   val_split = float = 0.15
   test_split = float = 0.15
+
+transform.rbg
+set = datasets.ImageFolder(
+  root = DATA_DIR, sample_candlesticks
+  transform = transform
+
 #def(
 #transform.sensor
 
@@ -24,8 +30,8 @@ DATA_DIR = "sample_candlesticks" # directory of generated images
 transform = transform.
 
 #3 Loading images from UP/DOWN folders
-#set = datasets.ImageFolder( 
-  root = DATA_DIR,
+set = datasets.ImageFolder( 
+  root = DATA_DIR, 
   transform = transform
 )
 

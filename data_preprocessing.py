@@ -9,7 +9,7 @@ class DataConfig:
 
 transform.rbg
 set = datasets.ImageFolder(
-  root = DATA_DIR, sample_candlesticks
+  root = DATA_DIR, DOWN
   transform = transform
 
 #def(

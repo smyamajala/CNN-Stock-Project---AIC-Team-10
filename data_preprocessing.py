@@ -7,8 +7,6 @@ class DataConfig:
   val_split = float = 0.15
   test_split = float = 0.15
 
-transform.rbg
-
 #def(
 #transform.sensor
 

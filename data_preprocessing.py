@@ -10,7 +10,7 @@ class DataConfig:
 transform.rbg
 set = datasets.ImageFolder(sample_candlesticks
   root = DATA_DIR, DOWN
-  transform = rbg 
+  transform = transform 
 
 #def(
 #transform.sensor

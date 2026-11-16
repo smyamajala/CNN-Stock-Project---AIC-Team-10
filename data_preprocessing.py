@@ -8,7 +8,7 @@ class DataConfig:
   test_split = float = 0.15
 
 transform.rbg
-set = datasets.ImageFolder(
+set = datasets.ImageFolder(sample_candlesticks
   root = DATA_DIR, DOWN
   transform = transform
 

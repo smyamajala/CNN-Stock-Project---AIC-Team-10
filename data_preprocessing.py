@@ -6,10 +6,11 @@ class DataConfig:
   train_split = float = 0.7
   val_split = float = 0.15
   test_split = float = 0.15
-transform = transform.rbg
+transform = transform.rgb
 set = datasets.ImageFolder(
   root = DATA_DIR, sample_candlesticks, DOWN
   transform = transform
+
 
                         
                         

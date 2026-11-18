@@ -1,11 +1,13 @@
+import sample_candlesticks
 from sample_candlesticks import DOWN
-@DOWN
 class DataConfig:
   img_size: tuple[int, int] = [64, 64]
   batch_size: int = 4
   train_split = float = 0.7
   val_split = float = 0.15
   test_split = float = 0.15
+transform = transform
+
 
 #def(
 #transform.sensor

@@ -6,7 +6,8 @@ class DataConfig:
   train_split = float = 0.7
   val_split = float = 0.15
   test_split = float = 0.15
-transform = transform
+transform = transform.rbg
+
 
 
 #def(

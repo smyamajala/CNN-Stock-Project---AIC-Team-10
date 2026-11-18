@@ -1,26 +1,3 @@
-import sample_candlesticks
-from sample_candlesticks import DOWN
-class DataConfig:
-  img_size: tuple[int, int] = [64, 64]
-  batch_size: int = 4
-  train_split = float = 0.7
-  val_split = float = 0.15
-  test_split = float = 0.15
-transform = transform.rgb
-set = datasets.ImageFolder(
-  root = DATA_DIR, sample_candlesticks, DOWN
-  transform = transform
-
-
-                        
-                        
-
-
-
-
-#def(
-#transform.sensor
-
 import os # standard library
 from datetime import datetime # from this section import this feature
 
@@ -31,15 +8,21 @@ from torch.utils.data import DataLoader, Subset
 DATA_DIR = "sample_candlesticks" # directory of generated images 
 
 #1 Configuration: Sets image size, batch size, and split percentages
-
+class DataConfig:
+  img_size: tuple[int, int] = [64, 64]
+  batch_size: int = 4
+  train_split = float = 0.7
+  val_split = float = 0.15
+  test_split = float = 0.15
 #2 Transform images into format our CNN expects
-transform = transform.
+transform = transform.rgb
 
 #3 Loading images from UP/DOWN folders
 set = datasets.ImageFolder( 
-  root = DATA_DIR, 
+  root = DATA_DIR, DOWN
   transform = transform
 )
+
 
 #4 Sort the images chronogically by their start date 
 #5 Calculate split boundaries 

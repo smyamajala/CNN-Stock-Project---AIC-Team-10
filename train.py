@@ -4,7 +4,7 @@ Never touches the test set. evaluate.py owns that.
 """
 import torch
 from torch import nn
-
+import matplotlib.pyplot as plt
 
 def train(model, train_loader, val_loader, epochs=10, lr=0.001, save_path="model.pth", seed=0):
     torch.manual_seed(seed)  # same seed = same result every run (run seeds 0, 1, 2 to check it's not luck)
@@ -44,3 +44,18 @@ if __name__ == "__main__":
     train_loader, val_loader, _ = get_dataloaders()  # _ = test loader, unused on purpose
     # Hyperparameters (write the ones you try here): lr=0.001, epochs=10, seed=0
     train(StockCNN(), train_loader, val_loader, epochs=10, lr=0.001)
+
+    #Loss chart 
+def plot_loss(history, save_path = "loss_plot.png"): #takes the data given by the history dict from train()
+    epochs = range(1, len(history["train_loss"]) +1) #epoch will start at 1 on the x axis and continue on
+    plt.figure(figsize=(10,5)) # creates a new blank plot that its 10x5 inches 
+    plt.plot(epochs,history["train_loss"],marker = "o", label = "train loss") # this will run a line across all the epochs from the training data
+    plt.plot(epochs,history["val_loss"],marker = "o", label = "val loss") # creates  a validation loss line
+    plt.xlabel("epoch # ") # craetes a label for the x axis
+    plt.ylabel("loss") #label for y axis
+    plt.title("Training Losses vs Validation Losses") #title
+    plt.legend() #distinguishes the lines
+    plt.savefig(save_path)
+    plt.show()
+    
+    

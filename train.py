@@ -36,19 +36,10 @@ def train(model, train_loader, val_loader, epochs=10, lr=0.001, save_path="model
     return history
 
 
-if __name__ == "__main__":
-    # These two files are not done yet (Nov 16). Names agreed with Arnav and Dale.
-    from model import StockCNN
-    from data_preprocessing import get_dataloaders
-
-    train_loader, val_loader, _ = get_dataloaders()  # _ = test loader, unused on purpose
-    # Hyperparameters (write the ones you try here): lr=0.001, epochs=10, seed=0
-    train(StockCNN(), train_loader, val_loader, epochs=10, lr=0.001)
-
-    #Loss chart 
+#Loss chart
 def plot_loss(history, save_path = "loss_plot.png"): #takes the data given by the history dict from train()
     epochs = range(1, len(history["train_loss"]) +1) #epoch will start at 1 on the x axis and continue on
-    plt.figure(figsize=(10,5)) # creates a new blank plot that its 10x5 inches 
+    plt.figure(figsize=(10,5)) # creates a new blank plot that its 10x5 inches
     plt.plot(epochs,history["train_loss"],marker = "o", label = "train loss") # this will run a line across all the epochs from the training data
     plt.plot(epochs,history["val_loss"],marker = "o", label = "val loss") # creates  a validation loss line
     plt.xlabel("epoch # ") # craetes a label for the x axis
@@ -57,5 +48,14 @@ def plot_loss(history, save_path = "loss_plot.png"): #takes the data given by th
     plt.legend() #distinguishes the lines
     plt.savefig(save_path)
     plt.show()
-    
-    
+
+
+if __name__ == "__main__":
+    # These two files are not done yet (Nov 16). Names agreed with Arnav and Dale.
+    from model import StockCNN
+    from data_preprocessing import get_dataloaders
+
+    train_loader, val_loader, _ = get_dataloaders()  # _ = test loader, unused on purpose
+    # Hyperparameters (write the ones you try here): lr=0.001, epochs=10, seed=0
+    history = train(StockCNN(), train_loader, val_loader, epochs=10, lr=0.001)
+    plot_loss(history)  # saves loss_plot.png

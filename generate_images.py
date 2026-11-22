@@ -27,7 +27,7 @@ TICKERS = [
 START, END = "2010-01-01", "2025-01-01"  # 15 years
 WINDOW = 20   # days in one picture
 FORWARD = 5   # how many trading days ahead we predict
-STEP = 5      # start a new picture every 5 days, so no two labels share the same 5 future days
+STEP = 20     # new picture every 20 days: no two pictures share a day, ~9.4k images (was 5 -> 37.5k)
 OUT_DIR = "candlesticks"
 CACHE = "prices.pkl"  # downloaded prices, saved so re-runs don't hit Yahoo again
 

@@ -11,7 +11,7 @@ DATA_DIR = "sample_candlesticks"
 
 
 class DataConfig:
-    img_size = (64, 64)
+    img_size = (256, 256)
     batch_size = 4
 
     train_split = 0.70
@@ -42,7 +42,7 @@ def get_start_date(image_path):
 def get_dataloaders():
 
     dataset = datasets.ImageFolder(
-        root=DATA_DIR,
+        root=DATA_DIR, sample_candlesticks
         transform=transform
     )
 

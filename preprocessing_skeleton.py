@@ -13,7 +13,6 @@ DATA_DIR = "sample_candlesticks"
 class DataConfig:
     img_size = (256, 256)
     batch_size = 4
-
     train_split = 0.70
     val_split = 0.15
     test_split = 0.15

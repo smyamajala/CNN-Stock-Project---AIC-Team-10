@@ -1,11 +1,9 @@
-import pandas as pd 
+import os
 
-df = pd.read_csv('data.csv') # read file (file handling)
+import numpy as np
+import pandas as pd
 
-NaN --> Null --> df.dropna(inplace == 'True') # clean ALL rows with NaN/NULL
+def addition(a, b):
+    return a + b
 
-Empty --> 0 or [   ] --> df.dropna() # clean empty cells ******* 
-
-df.dropna({'row''column'}
-
-df.loc[7,'Duration'] = 45 # replacing values 
+print(addition(5, 10))

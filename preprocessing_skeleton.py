@@ -49,7 +49,7 @@ def get_dataloaders():
     if len(dataset) == 0:
         raise ValueError("No images found in the dataset.")
 
-    print("Dataset size:", len(dataset))
+    print("Dataset size:", len(sample_candlesticks))
     print("Class mapping:", dataset.class_to_idx)
 
     if dataset.class_to_idx != {"DOWN": 0, "UP": 1}:
@@ -57,7 +57,7 @@ def get_dataloaders():
 
     # Sort images chronologically
     chronological_indices = sorted(
-        range(len(dataset)), 
+        range(len(sample_candlesticks)), 
         key=lambda index: get_start_date(
             dataset.samples[index][0]
         )
@@ -91,7 +91,7 @@ def get_dataloaders():
     # 8. Create DataLoaders
     train_loader = DataLoader(
         train_dataset,
-        batch_size=DataConfig.batch_size,
+        batch_size=DataConfig.batch_size, 
         shuffle=True,
         num_workers=0
     )

@@ -53,7 +53,7 @@ def plot_loss(history, save_path = "loss_plot.png"): #takes the data given by th
 if __name__ == "__main__":
     # These two files are not done yet (Nov 16). Names agreed with Arnav and Dale.
     from CNN_build import StockCNN
-    from data_preprocessing import get_dataloaders
+    from preprocessing_skeleton import get_dataloaders
 
     train_loader, val_loader, _ = get_dataloaders()  # _ = test loader, unused on purpose
     # Hyperparameters (write the ones you try here): lr=0.001, epochs=10, seed=0

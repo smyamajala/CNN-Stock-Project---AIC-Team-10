@@ -2,7 +2,6 @@ import torch
 from torch import nn
 from torch.utils.data import TensorDataset, DataLoader
 import os
-from train import train
 
 # 1. CNN model
 
@@ -46,7 +45,7 @@ class StockCNN(nn.Module):
 # 20 fake RGB images, each 64x64 pixels
 torch.manual_seed(0)
 
-images = torch.randn(20, 3, 64, 64)
+images = torch.randn(20, 3, 256, 256)
 
 # Labels: 0 = DOWN, 1 = UP
 labels = torch.randint(0, 2, (20,))

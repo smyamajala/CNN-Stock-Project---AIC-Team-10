@@ -6,6 +6,8 @@ import torch
 from torch import nn
 import matplotlib.pyplot as plt
 
+# torch.manual_seed(0) = StockCNN.history = train(StockCNN(), train_loader, val_loader, epochs=10, lr=0.001, seed=0)
+
 def train(model, train_loader, val_loader, epochs=10, lr=0.001, save_path="model.pth", seed=0):
     torch.manual_seed(seed)  # same seed = same result every run (run seeds 0, 1, 2 to check it's not luck)
 
@@ -32,6 +34,11 @@ def train(model, train_loader, val_loader, epochs=10, lr=0.001, save_path="model
         history["val_loss"].append(val_loss)
         print(f"epoch {epoch + 1}/{epochs}  train loss {train_loss:.4f}  val loss {val_loss:.4f}")
 
+    # best_val_loss = float('inf')  # inside epoch loop
+    # if val_loss < best_val_loss:
+    #     best_val_loss = val_loss
+    #     torch.save(model.state_dict(), save_path)  # save the best model weights
+
     torch.save(model.state_dict(), save_path)  # state_dict = just the learned numbers
     return history
 
@@ -52,8 +59,8 @@ def plot_loss(history, save_path = "loss_plot.png"): #takes the data given by th
 
 if __name__ == "__main__":
     # These two files are not done yet (Nov 16). Names agreed with Arnav and Dale.
-    from model import StockCNN
-    from data_preprocessing import get_dataloaders
+    from CNN_build import StockCNN
+    from preprocessing_skeleton import get_dataloaders
 
     train_loader, val_loader, _ = get_dataloaders()  # _ = test loader, unused on purpose
     # Hyperparameters (write the ones you try here): lr=0.001, epochs=10, seed=0

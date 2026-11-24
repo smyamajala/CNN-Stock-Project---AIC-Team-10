@@ -1,8 +1,9 @@
-
 import torch
 import matplotlib
 matplotlib.use("Agg")  # save the chart to a file, never open a window
 import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import roc_auc_score
 
 DOWN, UP = 0, 1
 
@@ -10,19 +11,21 @@ DOWN, UP = 0, 1
 # 1. Run the model over a loader and collect every true label and every guess
 def get_predictions(model, loader):
     model.eval()  # test mode: no learning
-    all_labels, all_preds = [], []
+    all_labels, all_preds, all_probs = [], [], []
     with torch.no_grad():  # skip the nudge math, faster
         for images, labels in loader:
             scores = model(images)  # 2 scores per picture: (DOWN, UP)
             preds = scores.argmax(dim=1)  # pick whichever score is bigger
+            probs = torch.softmax(scores, dim=1)[:, UP]  # how sure the model is that it's UP (0 to 1)
             all_labels += labels.tolist()
             all_preds += preds.tolist()
-    return all_labels, all_preds
+            all_probs += probs.tolist()
+    return all_labels, all_preds, all_probs
 
 
 # 2. The baseline: ignore the picture, always guess UP
 def always_up_baseline(labels):
-    # 56% of our images are UP, so this "dumb" guess already gets ~56%.
+    # This "dumb" guess scores exactly the % of UP images in the test set.
     # The CNN is only useful if it beats this number.
     return [UP] * len(labels)
 
@@ -62,6 +65,7 @@ def print_report(cnn, base):
         ("F1 (UP)", "f1"),
         ("Recall (DOWN)", "down_recall"),
         ("% guessed UP", "pct_guessed_up"),
+        ("ROC-AUC", "roc_auc"),
     ]
     print("\n" + "=" * 46)
     print(f"TEST RESULTS  ({cnn['n']} test images)")
@@ -91,17 +95,11 @@ def print_report(cnn, base):
 def plot_confusion_matrix(m, save_path="confusion_matrix.png", title="CNN on the test set"):
     grid = [[m["tn"], m["fp"]], [m["fn"], m["tp"]]]
     fig, ax = plt.subplots(figsize=(5, 4))
-    ax.imshow(grid, cmap="Blues")
-    ax.set_xticks([0, 1], labels=["DOWN", "UP"])
-    ax.set_yticks([0, 1], labels=["DOWN", "UP"])
+    sns.heatmap(grid, annot=True, fmt="d", cmap="Blues", annot_kws={"fontsize": 14},
+                xticklabels=["DOWN", "UP"], yticklabels=["DOWN", "UP"], ax=ax)  # Seaborn heatmap
     ax.set_xlabel("Guessed")
     ax.set_ylabel("Real")
     ax.set_title(f"{title}  (accuracy {m['accuracy']:.1%})")
-    biggest = max(max(row) for row in grid) or 1
-    for r in range(2):
-        for c in range(2):
-            color = "white" if grid[r][c] > biggest / 2 else "black"  # readable on dark squares
-            ax.text(c, r, grid[r][c], ha="center", va="center", color=color, fontsize=14)
     fig.tight_layout()
     fig.savefig(save_path)
     plt.close(fig)
@@ -109,21 +107,24 @@ def plot_confusion_matrix(m, save_path="confusion_matrix.png", title="CNN on the
 
 # 6. Do everything: predict, score, compare, print, save
 def evaluate(model, test_loader, plot_path="confusion_matrix.png"):
-    labels, preds = get_predictions(model, test_loader)
+    labels, preds, probs = get_predictions(model, test_loader)
     if not labels:
         raise ValueError("The test loader is empty.")
     cnn = compute_metrics(labels, preds)
     base = compute_metrics(labels, always_up_baseline(labels))
+    # ROC-AUC: 0.5 = coin flip, 1.0 = perfect. Needs both UP and DOWN in the test set.
+    cnn["roc_auc"] = roc_auc_score(labels, probs) if len(set(labels)) == 2 else 0.5
+    base["roc_auc"] = 0.5  # always-UP gives every image the same score, so it can't rank them
     print_report(cnn, base)
     if plot_path:
         plot_confusion_matrix(cnn, plot_path)
-        print(f"\nSaved {plot_path}")
+        print(f"\nSaved {plot_path}")SS
     return cnn, base
 
 
 if __name__ == "__main__":
-    from model import StockCNN  # Arnav
-    from data_preprocessing import get_dataloaders  # Dale
+    from CNN_build import StockCNN  # Arnav
+    from preprocessing_skeleton import get_dataloaders  # Dale (same imports as train.py)
 
     _, _, test_loader = get_dataloaders()  # only the test loader; train/val belong to train.py
 

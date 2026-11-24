@@ -118,7 +118,7 @@ def evaluate(model, test_loader, plot_path="confusion_matrix.png"):
     print_report(cnn, base)
     if plot_path:
         plot_confusion_matrix(cnn, plot_path)
-        print(f"\nSaved {plot_path}")SS
+        print(f"\nSaved {plot_path}")
     return cnn, base
 
 
